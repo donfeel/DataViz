@@ -1,0 +1,120 @@
+﻿<script src="~/Scripts/d3/d3.min.js"></script>
+<!--Title-->
+<div>
+
+</div>
+<!--Content-->
+<div>
+    <!--Section Top-->
+    <div>
+        <div id="mapContainer">           
+        </div>
+        <div style="border-right:1px dashed #f00; height:150px; width:1px;"></div>
+        <script>
+    var width = 500;
+    var height = 500;
+
+    var svg = d3.select("#mapContainer").append("svg")
+        .attr("width", width)
+        .attr("height", height)
+        .append("g")
+        .attr("transform", "translate(0,0)");
+
+    var projection = d3.geo.mercator()
+                        .center([107, 31])
+                        .scale(425)
+                        .translate([width / 2, height / 2]);
+
+    var path = d3.geo.path()
+                    .projection(projection);
+
+
+    var color = d3.scale.category20();
+
+
+    d3.json("/data/geo", function (error, root) {
+
+        if (error)
+            return console.error(error);
+        console.log(root.features);
+
+        svg.selectAll("path")
+            .data(root.features)
+            .enter()
+            .append("path")
+            .attr("stroke", "#000")
+            .attr("stroke-width", 1)
+            .attr("fill", function (d, i) {
+                return color(i);
+            })
+            .attr("d", path)
+            .on("mouseover", function (d, i) {
+                d3.select(this)
+                    .attr("fill", "yellow");
+            })
+            .on("mouseout", function (d, i) {
+                d3.select(this)
+                    .attr("fill", color(i));
+            });
+
+    });
+
+        </script>
+
+    </div>
+
+    <!--Section Mid-->
+    <div></div>
+
+    <!--Section Bot-->
+    <div></div>
+
+</div>
+
+
+
+<div id="body">
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h1>Welcome to ASP.NET Web API!</h1>
+                <h2>Modify the code in this template to jump-start your ASP.NET Web API development.</h2>
+            </hgroup>
+            <p>
+                ASP.NET Web API allows you to expose your applications, data and services to the
+                web directly over HTTP.
+            </p>
+            <p>
+                To learn more about ASP.NET Web API visit the
+                <a href="http://go.microsoft.com/fwlink/?LinkID=238195" title="ASP.NET Web API Website">ASP.NET Web API Website</a>.
+                The page features <mark>videos, tutorials, and samples</mark> to help you get the most from ASP.NET Web API.
+                If you have any questions about ASP.NET Web API, visit
+                <a href="http://go.microsoft.com/fwlink/?LinkID=238196" title="ASP.NET Web API Forum">our forums</a>.
+            </p>
+        </div>
+    </section>
+    <section class="content-wrapper main-content clear-fix">
+        <h3>We suggest the following steps:</h3>
+        <ol class="round">
+            <li class="one">
+                <h5>Getting Started</h5>
+                ASP.NET Web API is a framework that makes it easy to build HTTP services that reach
+                a broad range of clients, including browsers and mobile devices. ASP.NET Web API
+                is an ideal platform for building RESTful applications on the .NET Framework.
+                <a href="http://go.microsoft.com/fwlink/?LinkId=245160">Learn more…</a>
+            </li>
+
+            <li class="two">
+                <h5>Add NuGet packages and jump-start your coding</h5>
+                NuGet makes it easy to install and update free libraries and tools.
+                <a href="http://go.microsoft.com/fwlink/?LinkId=245161">Learn more…</a>
+            </li>
+            <li class="three">
+                <h5>Find Web Hosting</h5>
+                You can easily find a web hosting company that offers the right mix of features
+                and price for your applications.
+                <a href="http://go.microsoft.com/fwlink/?LinkId=245164">Learn more…</a>
+            </li>
+        </ol>
+    </section>
+</div>
